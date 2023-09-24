@@ -2,6 +2,7 @@ package com.cs407.lab2calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -52,18 +53,19 @@ public class MainActivity extends AppCompatActivity {
             int num1 = Integer.parseInt(number1.getText().toString());
             int num2 = Integer.parseInt(number2.getText().toString());
             if (num2 == 0) {
-                throw new IllegalArgumentException();
+                Toast.makeText(MainActivity.this, "Divide by zero error", Toast.LENGTH_LONG).show();
+            } else {
+                goToActivity((double) num1 / num2);
             }
-            goToActivity(num1 / num2);
         } catch (NumberFormatException e) {
             Toast.makeText(MainActivity.this, "Enter both numbers", Toast.LENGTH_LONG).show();
-        } catch (IllegalArgumentException e) {
-            Toast.makeText(MainActivity.this, "Divide by zero error", Toast.LENGTH_LONG).show();
         }
     }
 
-    public void goToActivity(int result) {
-
+    public void goToActivity(double result) {
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra("result", result + "");
+        startActivity(intent);
     }
 
     @Override
